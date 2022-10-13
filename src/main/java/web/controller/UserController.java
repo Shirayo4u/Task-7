@@ -4,6 +4,7 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
@@ -35,7 +36,7 @@ public class UserController {
         }if (user.getId() == 0){
             userService.addUser(user);
         } else {
-            userService.updateUser(user);
+            userService.updateUser(user, user.getId());
         }
         return "redirect:/users";
     }
@@ -53,16 +54,28 @@ public class UserController {
         return "list";
     }
 
-    @GetMapping("/update/{id}")
-    public String updateUsers(@PathVariable(value = "id") int id, Model model) {
-        User user = userService.getUserById(id);
-        if (user == null) {
+    @PatchMapping ("/update/{id}")
+    public String updateUser(@ModelAttribute("user") User user,
+                             @PathVariable(value = "id") int id, ModelMap model) {
+        user = userService.getUserById(id);
+
+        if(user == null){
             return "redirect:/users";
         }
+        userService.updateUser(user, id);
         model.addAttribute("user", user);
         return "edit";
-
     }
+//     @RequestMapping (value = "/update/{id}", method = {RequestMethod.GET, RequestMethod.PATCH})
+//    public String updateUsers(@PathVariable(value = "id") int id, @ModelAttribute("user") User user) {
+//        userService.updateUser(userService.getUserById(id), id);
+//        if (user == null) {
+//            return "redirect:/users";
+//        }
+//
+//        return "edit";
+
+
 
 
     @DeleteMapping("/{id}")

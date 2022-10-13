@@ -8,7 +8,7 @@ public interface UserDao {
     List<User> getUsers();
     User getUserById(int id);
     void addUser(User user);
-    void updateUser(User user);
+    void updateUser(User user, int id);
     void deleteUser(int id);
 }
 
