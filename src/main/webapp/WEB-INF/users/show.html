@@ -5,17 +5,23 @@
   <title>User</title>
 </head>
 <body>
-<div>
-  <p th:text="${user.getName()}">VALUE</p>
-  <p th:text="${user.getAge()}">VALUE</p>
-  <p th:text="${user.getId()}">VALUE</p>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td th:text="${user.getId()}"></td>
+    <td th:text="${user.getName()}"></td>
+    <td th:text="${user.getAge()}"></td>
+  </tr>
+</table>
 
-  <a th:href="@{/users/update/{id}(id=${user.getId()})}">Update</a>
-</div>
+<a th:href="@{/users/update/{id}(id=${user.getId()})}">Update user</a>
+
 <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-  <input type="hidden" name="_method" value="delete">
   <input type="submit" value="Delete"/>
-
 </form>
 </body>
 </html>
